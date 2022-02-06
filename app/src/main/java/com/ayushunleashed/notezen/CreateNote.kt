@@ -51,7 +51,7 @@ class CreateNote : AppCompatActivity() {
         val description = enterDescription.text.toString()
         val note=NotesModel(title,description)
         if (title.isEmpty() || description.isEmpty()) {
-            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "All Fields are required", Toast.LENGTH_SHORT).show();
         } else {
 
             db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").add(note).
@@ -62,8 +62,6 @@ class CreateNote : AppCompatActivity() {
             }
         }
     }
-
-
 
         override fun onCreateOptionsMenu(menu: Menu?): Boolean {
             menuInflater.inflate(R.menu.createnotemenu, menu)
@@ -83,9 +81,6 @@ class CreateNote : AppCompatActivity() {
             }
        }
 
-//    private fun deleteNote() {
-//        db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").document(document.id)
-//    }
 
     fun customToolBar() {
             setSupportActionBar(myToolbar)

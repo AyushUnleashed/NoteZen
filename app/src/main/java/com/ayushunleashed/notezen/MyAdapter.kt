@@ -3,30 +3,16 @@ package com.ayushunleashed.notezen
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.ayushunleashed.notezen.models.NotesModel
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.item_note.view.*
 
-class MyAdapter(private var notesList:ArrayList<NotesModel>): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.MyViewHolder {
-        val itemView =LayoutInflater.from(parent.context).inflate(R.layout.item_note,parent,false)
-
-        return  MyViewHolder(itemView)
-    }
-
-    override fun onBindViewHolder(holder: MyAdapter.MyViewHolder, position: Int) {
-        val note:NotesModel =notesList[position]
-        holder.title.text = note.title
-        holder.description.text=note.description
-    }
-
-    override fun getItemCount(): Int {
-        return notesList.size
-    }
+class MyAdapter(options: FirestoreRecyclerOptions<NotesModel>,val listner:INotesRVAdapter) :FirestoreRecyclerAdapter<NotesModel,MyAdapter.MyViewHolder>(
+    options
+){
 
     public class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
     {
@@ -34,8 +20,30 @@ class MyAdapter(private var notesList:ArrayList<NotesModel>): RecyclerView.Adapt
         val description:TextView = itemView.findViewById(R.id.noteDescription)
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        val itemView =LayoutInflater.from(parent.context).inflate(R.layout.item_note,parent,false)
+        val itemViewViewHolder = MyViewHolder(itemView)
+
+        itemView.setOnClickListener {
+            listner.onItemClicked(snapshots.getSnapshot(itemViewViewHolder.adapterPosition).id)
+        }
+
+        itemView.setOnLongClickListener {
+            listner.onItemLongClicked(snapshots.getSnapshot(itemViewViewHolder.adapterPosition).id)
+            true }
+
+
+        return  itemViewViewHolder
+    }
+
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int, model: NotesModel) {
+        holder.title.text = model.title
+        holder.description.text=model.description
+    }
 }
 
-//interface INotesRVAdapter{
-//    fun onItemClicked(note: NotesModel)
-//}
+
+interface INotesRVAdapter{
+    fun onItemClicked(note: String)
+    fun onItemLongClicked(note: String)
+}

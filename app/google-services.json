@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "156265298719",
+    "project_id": "notezen-bdfe8",
+    "storage_bucket": "notezen-bdfe8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156265298719:android:745478834a74b2690fce2a",
+        "android_client_info": {
+          "package_name": "com.ayushunleashed.notezen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156265298719-88jqds1orv6gdscn2l3qpcnk70b7cfqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxzMXmUyWCOP2MDTojfw21o9I6JRVyV1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156265298719-88jqds1orv6gdscn2l3qpcnk70b7cfqe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

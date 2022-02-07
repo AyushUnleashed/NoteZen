@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_note_home.*
 import android.accounts.AccountManager
 import android.accounts.AuthenticatorDescription
 import android.graphics.Color
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -39,14 +40,14 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
     private  lateinit  var db:FirebaseFirestore
     private var pressedTime:Long = 0
 
+    private lateinit var deletedNote:NotesModel;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_home)
 
         customToolBar()
 
-//        val db =FirebaseFirestore.getInstance()
-//        collectionRef=db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes")
         mAuth= Firebase.auth
         firebaseUser = mAuth.currentUser!!
 
@@ -71,7 +72,6 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
                 setTextColor(Color.WHITE)
                 show()
             }
-            //Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
         }
         pressedTime = System.currentTimeMillis();
     }
@@ -90,7 +90,7 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
     private fun setUpRecyclerView()
     {
         val db =FirebaseFirestore.getInstance()
-        val query = db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes")
+        val query = db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").orderBy("title")
         val recyclerViewOptions =FirestoreRecyclerOptions.Builder<NotesModel>().setQuery(query,NotesModel::class.java).build()
         myAdapter= MyAdapter(recyclerViewOptions,this)
         myRecyclerView.adapter = myAdapter
@@ -112,7 +112,20 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-           deleteNote(myAdapter.snapshots.getSnapshot(viewHolder.adapterPosition).id)
+            var note =myAdapter.snapshots.getSnapshot(viewHolder.adapterPosition)
+
+            var docReference = note.reference
+            deletedNote = note.toObject(NotesModel::class.java)!!
+
+           deleteNote(note.id)
+            Snackbar.make(myRecyclerView,"Note Deleted",Snackbar.LENGTH_LONG)
+                .setAction("Undo", View.OnClickListener {
+                    docReference.set(deletedNote).addOnSuccessListener {
+                        //Toast.makeText(this@NoteHome,"Undo success",Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener{
+                        Toast.makeText(this@NoteHome,"Undo Failed",Toast.LENGTH_SHORT).show()
+                    }
+                }).show()
         }
 
     }
@@ -170,6 +183,7 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
         intent.putExtra("title",title)
         intent.putExtra("description",description)
         intent.putExtra("noteId",note)
+
         startActivity(intent)
     }
 
@@ -183,7 +197,7 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
         val query = db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes")
         query.document(note)
             .delete().addOnSuccessListener {
-                Toast.makeText(this,"Note Deleted Succesfully",Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this,"Note Deleted Succesfully",Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
                 Toast.makeText(this,"Not Deleted",Toast.LENGTH_SHORT).show()
             }

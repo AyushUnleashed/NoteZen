@@ -1,6 +1,8 @@
 package com.ayushunleashed.notezen
 
+import android.os.Debug
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +19,6 @@ import kotlinx.android.synthetic.main.item_note.view.*
 class MyAdapter(options: FirestoreRecyclerOptions<NotesModel>,val listner:INotesRVAdapter) :FirestoreRecyclerAdapter<NotesModel,MyAdapter.MyViewHolder>(
     options
 ){
-    lateinit var itemViewViewHolder:MyAdapter.MyViewHolder
 
     public class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
     {
@@ -27,8 +28,8 @@ class MyAdapter(options: FirestoreRecyclerOptions<NotesModel>,val listner:INotes
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView =LayoutInflater.from(parent.context).inflate(R.layout.item_note,parent,false)
-        itemViewViewHolder = MyViewHolder(itemView)
+        var itemView =LayoutInflater.from(parent.context).inflate(R.layout.item_note,parent,false)
+        var itemViewViewHolder = MyViewHolder(itemView)
 
         itemView.setOnClickListener {
             listner.onItemClicked(snapshots.getSnapshot(itemViewViewHolder.adapterPosition).id,itemViewViewHolder.title.text.toString(),itemViewViewHolder.description.text.toString())

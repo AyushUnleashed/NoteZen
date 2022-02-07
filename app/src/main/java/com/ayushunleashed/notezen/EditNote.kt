@@ -62,6 +62,7 @@ class EditNote : AppCompatActivity() {
             titleR = bundle.getString("title").toString()
             descriptionR = bundle.getString("description").toString()
             noteId = bundle.getString("noteId").toString()
+
         }
         editTitle.setText(titleR)
         editDescription.setText(descriptionR)
@@ -106,10 +107,9 @@ class EditNote : AppCompatActivity() {
         if (title.isEmpty() || description.isEmpty()) {
             Toast.makeText(this, "All Fields are required", Toast.LENGTH_SHORT).show();
         } else {
-            db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").document(noteId).set(note,
-                SetOptions.merge()).
+            db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").document(noteId).set(note).
             addOnSuccessListener {
-                Toast.makeText(this,"Note Updated", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this,"Note Updated", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
                 Toast.makeText(this,"Failed To update Note", Toast.LENGTH_SHORT).show()
             }

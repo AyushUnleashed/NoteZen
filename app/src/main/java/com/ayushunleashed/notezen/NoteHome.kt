@@ -22,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import org.w3c.dom.Document
+import kotlin.properties.Delegates
 
 class NoteHome : AppCompatActivity(), INotesRVAdapter {
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -31,6 +32,7 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
     private lateinit var notesArrayList:ArrayList<NotesModel>
     private lateinit var myAdapter: MyAdapter
     private  lateinit  var db:FirebaseFirestore
+    private var pressedTime:Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +53,17 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
 
         setUpRecyclerView()
 
+    }
+
+    override fun onBackPressed() {
+        // Press back again to exit
+        if (pressedTime + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            finish();
+        } else {
+            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+        }
+        pressedTime = System.currentTimeMillis();
     }
 
 

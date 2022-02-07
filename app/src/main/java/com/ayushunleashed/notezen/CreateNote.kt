@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.core.app.NavUtils
 import com.ayushunleashed.notezen.models.NotesModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
@@ -49,6 +50,10 @@ class CreateNote : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        finish()
+        NavUtils.navigateUpFromSameTask(this)
+    }
     fun addNotes() {
         val title = enterTitle.text.toString()
         val description = enterDescription.text.toString()

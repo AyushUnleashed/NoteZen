@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.app.NavUtils
 import com.ayushunleashed.notezen.models.NotesModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -47,6 +48,11 @@ class EditNote : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    override fun onBackPressed() {
+        finish()
+        NavUtils.navigateUpFromSameTask(this)
     }
 
     fun settingPreviousFields()

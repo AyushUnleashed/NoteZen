@@ -3,6 +3,7 @@ package com.ayushunleashed.notezen
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -76,6 +77,11 @@ class CreateNote : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.deleteButtonTop -> {
+            Toast.makeText(this,"Coming Soon",Toast.LENGTH_SHORT).show()
+            true
+        }
+        R.id.pinNoteButtonTop -> {
+            Toast.makeText(this,"Coming Soon",Toast.LENGTH_SHORT).show()
             true
         }
         else -> {

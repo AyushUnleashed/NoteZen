@@ -6,14 +6,14 @@
         android:id="@+id/pinNoteButtonTop"
         android:icon="@drawable/ic_baseline_push_pin_24"
         android:title="PIN NOTE"
-        app:showAsAction="never"
+        app:showAsAction="always"
         />
 
     <item
         android:id="@+id/deleteButtonTop"
         android:icon="@drawable/ic_baseline_delete_24"
         android:title="Delete"
-        app:showAsAction="never"
+        app:showAsAction="always"
         />
 
 </menu>

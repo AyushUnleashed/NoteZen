@@ -35,7 +35,7 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var firebaseUser: FirebaseUser;
     private lateinit var notesArrayList:ArrayList<NotesModel>
-    private lateinit var myAdapter: MyAdapter
+    public lateinit var myAdapter: MyAdapter
     private  lateinit  var db:FirebaseFirestore
     private var pressedTime:Long = 0
 

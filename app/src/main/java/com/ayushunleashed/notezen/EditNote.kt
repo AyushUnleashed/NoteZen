@@ -75,6 +75,11 @@ class EditNote : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.deleteButtonTop -> {
+            Toast.makeText(this,"Coming Soon",Toast.LENGTH_SHORT).show()
+            true
+        }
+        R.id.pinNoteButtonTop -> {
+            Toast.makeText(this,"Coming Soon",Toast.LENGTH_SHORT).show()
             true
         }
         else -> {

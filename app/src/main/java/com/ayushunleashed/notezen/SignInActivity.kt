@@ -151,7 +151,7 @@ class SignInActivity : AppCompatActivity() {
         {
             gSignInButton.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
-            Toast.makeText(this,"Login Failed",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,"Login Failed",Toast.LENGTH_SHORT).show()
         }
     }
 

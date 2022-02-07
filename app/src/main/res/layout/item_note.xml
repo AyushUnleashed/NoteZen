@@ -28,24 +28,24 @@
                 android:paddingLeft= "@dimen/_16sdp"
                 android:maxLines="1"
                 android:fontFamily="@font/manropebold"
-                android:textSize="@dimen/_18ssp"
+                android:textSize="@dimen/_12ssp"
                 android:textColor="@color/white"
                 android:includeFontPadding="false"/>
 
             <TextView
+                android:id="@+id/noteDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingRight="@dimen/_16sdp"
+                android:ellipsize="end"
+                android:fontFamily="@font/manroperegular"
+                android:includeFontPadding="false"
+                android:maxLines="10"
                 android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_8sdp"
-                android:id="@+id/noteDescription"
+                android:paddingRight="@dimen/_16sdp"
                 android:text="The Union Budget of India was presented in the Parliament yesterday by the Finance Minister of India. 💵"
-                android:fontFamily="@font/manroperegular"
-                android:ellipsize="end"
-                android:maxLines="10"
-                android:textSize="@dimen/_14ssp"
                 android:textColor="@color/white60"
-                android:includeFontPadding="false"/>
+                android:textSize="@dimen/_12ssp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 android:id="@+id/noteDate"
                 android:text="May 21, 2022"
                 android:fontFamily="@font/manroperegular"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_8ssp"
                 android:textColor="@color/white60"
                 android:includeFontPadding="false"/>
 

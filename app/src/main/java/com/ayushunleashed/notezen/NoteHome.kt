@@ -130,8 +130,6 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
         intent.putExtra("title",title)
         intent.putExtra("description",description)
         intent.putExtra("noteId",note)
-        Toast.makeText(this,title,Toast.LENGTH_LONG).show()
-
         startActivity(intent)
     }
 

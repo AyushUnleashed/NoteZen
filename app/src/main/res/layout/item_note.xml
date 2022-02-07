@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/noteCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,17 +20,17 @@
 
             <TextView
                 android:id="@+id/noteTitle"
-                android:text="Card Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/manropebold"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/_16sdp"
                 android:paddingTop="@dimen/_16sdp"
                 android:paddingRight="@dimen/_16sdp"
-                android:paddingLeft= "@dimen/_16sdp"
-                android:maxLines="1"
-                android:fontFamily="@font/manropebold"
-                android:textSize="@dimen/_12ssp"
+                android:text="Card Title"
                 android:textColor="@color/white"
-                android:includeFontPadding="false"/>
+                android:textSize="@dimen/_12ssp" />
 
             <TextView
                 android:id="@+id/noteDescription"
@@ -63,7 +63,7 @@
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
 </RelativeLayout>

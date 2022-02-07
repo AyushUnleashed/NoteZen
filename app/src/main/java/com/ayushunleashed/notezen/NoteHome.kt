@@ -16,11 +16,16 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_note_home.*
 import android.accounts.AccountManager
 import android.accounts.AuthenticatorDescription
+import android.graphics.Color
 import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.item_note.*
 import org.w3c.dom.Document
 import kotlin.properties.Delegates
 
@@ -50,7 +55,6 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
             val intent = Intent(this,CreateNote::class.java)
             startActivity(intent)
         }
-
         setUpRecyclerView()
 
     }
@@ -61,7 +65,13 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
             super.onBackPressed();
             finish();
         } else {
-            Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
+            val snackbar =Snackbar.make(myRecyclerView,"Press back again to exit",Snackbar.LENGTH_SHORT)
+            snackbar.apply {
+                setBackgroundTint(Color.rgb(23,28,38))
+                setTextColor(Color.WHITE)
+                show()
+            }
+            //Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
         }
         pressedTime = System.currentTimeMillis();
     }
@@ -86,12 +96,30 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
         myRecyclerView.adapter = myAdapter
         myRecyclerView.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
 
+        //deleting notes by swipping
+        ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(myRecyclerView)
+    }
+
+
+    //variable to perform swipping operations
+    var itemTouchHelperCallBack = object: ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+           deleteNote(myAdapter.snapshots.getSnapshot(viewHolder.adapterPosition).id)
+        }
+
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
-        val logoutItem = menu?.findItem(R.id.logoutButton)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -120,7 +148,6 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
         mAuth.signOut();
         clearOldLogin();
 
-
         val intent = Intent(this,SignInActivity::class.java)
         startActivity(intent);
     }
@@ -147,10 +174,10 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
     }
 
     override fun onItemLongClicked(note: String) {
-        deleteNote(note)
+        // TODO: 08-02-2022  
     }
 
-    public fun deleteNote(note: String)
+    fun deleteNote(note: String)
     {
         val db =FirebaseFirestore.getInstance()
         val query = db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes")

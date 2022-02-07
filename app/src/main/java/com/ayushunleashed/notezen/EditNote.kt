@@ -12,10 +12,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_create_note.*
 import kotlinx.android.synthetic.main.activity_edit_note.*
-import kotlinx.android.synthetic.main.activity_note_home.*
 
 
 class EditNote : AppCompatActivity() {
@@ -27,6 +26,7 @@ class EditNote : AppCompatActivity() {
     lateinit var firebaseUser: FirebaseUser;
     lateinit var firebaseAuth: FirebaseAuth;
 
+    var dateClass=DateClass()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_note)
@@ -93,15 +93,16 @@ class EditNote : AppCompatActivity() {
     }
 
     fun updateNotes() {
-
         val title = editTitle.text.toString()
         val description = editDescription.text.toString()
-        val note=NotesModel(title,description)
+        val date= "ed: "+dateClass.getDate()
+        val note=NotesModel(title,description,date)
 
         if (title.isEmpty() || description.isEmpty()) {
             Toast.makeText(this, "All Fields are required", Toast.LENGTH_SHORT).show();
         } else {
-            db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").document(noteId).set(note).
+            db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").document(noteId).set(note,
+                SetOptions.merge()).
             addOnSuccessListener {
                 Toast.makeText(this,"Note Updated", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {

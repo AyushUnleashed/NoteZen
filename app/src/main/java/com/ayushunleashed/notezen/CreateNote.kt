@@ -6,19 +6,16 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.core.app.NavUtils
 import com.ayushunleashed.notezen.models.NotesModel
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_create_note.*
-import kotlinx.android.synthetic.main.activity_note_home.*
+import kotlinx.android.synthetic.main.activity_edit_note.*
 
 
 class CreateNote : AppCompatActivity() {
@@ -77,26 +74,24 @@ class CreateNote : AppCompatActivity() {
             return super.onCreateOptionsMenu(menu)
         }
 
-       override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-            R.id.deleteButtonTop -> {
-                //deleteNote()
-                true
-            }
-            else -> {
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                super.onOptionsItemSelected(item)
-            }
-       }
-
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.deleteButtonTop -> {
+            true
+        }
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+    }
 
     private fun customToolBar() {
-            setSupportActionBar(myCreateToolbar)
-            supportActionBar?.setDisplayShowTitleEnabled(false);
-            val actionBar = supportActionBar
-            actionBar?.setDisplayShowHomeEnabled(true)
-            actionBar?.setDisplayHomeAsUpEnabled(true)
-        }
+        setSupportActionBar(myCreateToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false);
+        val actionBar = supportActionBar
+        actionBar?.setDisplayShowHomeEnabled(true)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
 
     }

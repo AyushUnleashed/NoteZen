@@ -47,6 +47,8 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingRight="@dimen/_2sdp"
+        android:paddingLeft="@dimen/_2sdp"
         tools:listitem="@layout/item_note">
 
     </androidx.recyclerview.widget.RecyclerView>

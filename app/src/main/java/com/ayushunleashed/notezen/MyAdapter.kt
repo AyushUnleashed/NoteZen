@@ -46,7 +46,7 @@ class MyAdapter(options: FirestoreRecyclerOptions<NotesModel>,val listner:INotes
     override fun onBindViewHolder(holder: MyViewHolder, position: Int, model: NotesModel) {
         holder.title.text = model.title
         holder.description.text=model.description
-        holder.date.text =model.date
+        holder.date.text = model.date
     }
 
 }

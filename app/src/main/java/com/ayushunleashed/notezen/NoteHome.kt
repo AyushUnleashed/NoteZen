@@ -90,7 +90,7 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
     private fun setUpRecyclerView()
     {
         val db =FirebaseFirestore.getInstance()
-        val query = db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").orderBy("title")
+        val query = db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").orderBy("date")
         val recyclerViewOptions =FirestoreRecyclerOptions.Builder<NotesModel>().setQuery(query,NotesModel::class.java).build()
         myAdapter= MyAdapter(recyclerViewOptions,this)
         myRecyclerView.adapter = myAdapter

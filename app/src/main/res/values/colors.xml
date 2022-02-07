@@ -9,13 +9,12 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background">#0E121A</color>
+    <color name="backgroundDark">#101217</color>
     <color name="card_color">#171C26</color>
     <color name="blue">#3269FF</color>
     <color name="white87">#DEFFFFFF</color>
     <color name="white60">#99FFFFFF</color>
+    <color name="white70">#B3FFFFFF</color>
     <color name="white30">#4DFFFFFF</color>
-
-
-
 
 </resources>

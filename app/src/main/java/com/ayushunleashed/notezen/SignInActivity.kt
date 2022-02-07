@@ -75,7 +75,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun signIn() {
-        Toast.makeText(this,"Opened Signin",Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this,"Opened Signin",Toast.LENGTH_SHORT).show()
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
 
@@ -86,14 +86,14 @@ class SignInActivity : AppCompatActivity() {
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            Toast.makeText(this,"On Activity Result",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,"On Activity Result",Toast.LENGTH_SHORT).show()
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task);
         }
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        Toast.makeText(this,"handle Sign In Result",Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this,"handle Sign In Result",Toast.LENGTH_SHORT).show()
         try {
             // Google Sign In was successful, authenticate with Firebase
             val account = completedTask.getResult(ApiException::class.java)!!
@@ -108,7 +108,7 @@ class SignInActivity : AppCompatActivity() {
 
     private fun firebaseAuthWithGoogle(idToken: String) {
 
-        Toast.makeText(this,"firebaseAuthWithGoogle",Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this,"firebaseAuthWithGoogle",Toast.LENGTH_SHORT).show()
         val credential = GoogleAuthProvider.getCredential(idToken, null)
 
         gSignInButton.visibility = View.GONE
@@ -130,7 +130,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun updateUI(firebaseuser: FirebaseUser?) {
-        Toast.makeText(this,"Updating UI",Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this,"Updating UI",Toast.LENGTH_SHORT).show()
 
         if(firebaseuser!=null)
         {
@@ -144,7 +144,7 @@ class SignInActivity : AppCompatActivity() {
 
             val intent = Intent(this,NoteHome::class.java)
             startActivity(intent);
-            Toast.makeText(this,"Going to Notes",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,"Going to Notes",Toast.LENGTH_SHORT).show()
             finish()
         }
         else

@@ -15,6 +15,7 @@ import com.google.firebase.firestore.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_note_home.*
 import android.accounts.AccountManager
+import android.accounts.AuthenticatorDescription
 import android.widget.Toast
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -68,7 +69,6 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
         val db =FirebaseFirestore.getInstance()
         val query = db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes")
         val recyclerViewOptions =FirestoreRecyclerOptions.Builder<NotesModel>().setQuery(query,NotesModel::class.java).build()
-
         myAdapter= MyAdapter(recyclerViewOptions,this)
         myRecyclerView.adapter = myAdapter
         myRecyclerView.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
@@ -84,8 +84,8 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
 
     fun customToolBar()
     {
-        setSupportActionBar(myToolbar)
-        custom_title.setText(myToolbar.title)
+        setSupportActionBar(myToolbarHome)
+        custom_title.setText(myToolbarHome.title)
         getSupportActionBar()?.setDisplayShowTitleEnabled(false);
     }
 
@@ -124,9 +124,14 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
         googleSignInClient.revokeAccess()
     }
 
-    override fun onItemClicked(note: String) {
-        Toast.makeText(this,"You clicked on item",Toast.LENGTH_SHORT).show()
+    override fun onItemClicked(note: String,title:String,description: String) {
+        //Toast.makeText(this,"You clicked on item",Toast.LENGTH_SHORT).show()
         val intent = Intent(this,EditNote::class.java)
+        intent.putExtra("title",title)
+        intent.putExtra("description",description)
+        intent.putExtra("noteId",note)
+        Toast.makeText(this,title,Toast.LENGTH_LONG).show()
+
         startActivity(intent)
     }
 
@@ -134,7 +139,7 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
         deleteNote(note)
     }
 
-    fun deleteNote(note: String)
+    public fun deleteNote(note: String)
     {
         val db =FirebaseFirestore.getInstance()
         val query = db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes")

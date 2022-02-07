@@ -17,7 +17,7 @@
         app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/myToolbar"
+            android:id="@+id/myEditToolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@color/background"
@@ -30,7 +30,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <EditText
-        android:id="@+id/enterTitle"
+        android:id="@+id/editTitle"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         android:background="@null"
         />
     <TextView
-        android:id="@+id/dateCreateNote"
+        android:id="@+id/dateEditNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/_8sdp"
@@ -54,11 +54,11 @@
         android:textSize="@dimen/_12ssp"
         android:textColor="@color/white"
         android:text="May 21, 2022"
-        app:layout_constraintTop_toBottomOf="@id/enterTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/editTitle"/>
 
     <EditText
-        android:id="@+id/enterDescription"
-        app:layout_constraintTop_toBottomOf="@id/dateCreateNote"
+        android:id="@+id/editDescription"
+        app:layout_constraintTop_toBottomOf="@id/dateEditNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter Description here"

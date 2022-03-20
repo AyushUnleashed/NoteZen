@@ -47,6 +47,7 @@ class CreateNote : AppCompatActivity() {
             addNotes()
             val intent = Intent(this,NoteHome::class.java)
             startActivity(intent)
+            finish() // this was needed to close the app , after creating note
         }
     }
 
@@ -63,7 +64,8 @@ class CreateNote : AppCompatActivity() {
             Toast.makeText(this, "All Fields are required", Toast.LENGTH_SHORT).show();
         } else {
 
-            db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").add(note).
+            db.collection("NoteBook").document(firebaseUser.uid).
+            collection("MyNotes").add(note).
             addOnSuccessListener {
                 //Toast.makeText(this,"Note Added",Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
@@ -94,12 +96,12 @@ class CreateNote : AppCompatActivity() {
     }
 
     private fun customToolBar() {
+
         setSupportActionBar(myCreateToolbar)
+        myCreateToolbar.setTitleTextColor(resources.getColor(R.color.white))
         supportActionBar?.setDisplayShowTitleEnabled(false);
         val actionBar = supportActionBar
         actionBar?.setDisplayShowHomeEnabled(true)
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }
-
-
     }

@@ -46,6 +46,7 @@ class EditNote : AppCompatActivity() {
             updateNotes()
             val intent = Intent(this,NoteHome::class.java)
             startActivity(intent)
+            finish()
         }
 
     }
@@ -107,7 +108,8 @@ class EditNote : AppCompatActivity() {
         if (title.isEmpty() || description.isEmpty()) {
             Toast.makeText(this, "All Fields are required", Toast.LENGTH_SHORT).show();
         } else {
-            db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").document(noteId).set(note).
+            db.collection("NoteBook").document(firebaseUser.uid).
+            collection("MyNotes").document(noteId).set(note).
             addOnSuccessListener {
                 //Toast.makeText(this,"Note Updated", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {

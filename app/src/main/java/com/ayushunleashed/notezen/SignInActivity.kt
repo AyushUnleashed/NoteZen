@@ -23,27 +23,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
-//class SignInActivity : AppCompatActivity() {
-//    private lateinit var mAuth:FirebaseAuth
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_sign_in)
-//
-//        mAuth= FirebaseAuth.getInstance()
-//        val user = mAuth.currentUser
-//
-//        if(user!=null)
-//        {
-//            val intent = Intent(this,NoteHome::class.java)
-//            startActivity(intent)
-//        }
-//        else
-//        {
-//            Toast.makeText(this,"Can't Login", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-//}
-
 class SignInActivity : AppCompatActivity() {
 
     private val RC_SIGN_IN: Int = 123
@@ -64,16 +43,25 @@ class SignInActivity : AppCompatActivity() {
         mAuth= Firebase.auth
 
 // Configure Google Sign In
+        //Make google Sign in client first,
+        //To make google sign in client we need google sign in options so we create that first.
+
+        //gso builder
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+
+        // using gso to make google sign in client.
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        // when sign in button is clicked , start signIn() function.
         gSignInButton.setOnClickListener {
             signIn()
         }
     }
 
+    // to Sign in You use gi
     private fun signIn() {
         //Toast.makeText(this,"Opened Signin",Toast.LENGTH_SHORT).show()
         val signInIntent = googleSignInClient.signInIntent

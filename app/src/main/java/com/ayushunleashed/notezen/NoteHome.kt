@@ -1,34 +1,31 @@
 package com.ayushunleashed.notezen
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.ayushunleashed.notezen.models.NotesModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.*
-import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_note_home.*
-import android.accounts.AccountManager
-import android.accounts.AuthenticatorDescription
-import android.graphics.Color
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.ayushunleashed.notezen.models.NotesModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.item_note.*
-import org.w3c.dom.Document
-import kotlin.properties.Delegates
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_note_home.*
+
 
 class NoteHome : AppCompatActivity(), INotesRVAdapter {
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -57,16 +54,16 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
             startActivity(intent)
         }
         setUpRecyclerView()
-
     }
 
     override fun onBackPressed() {
         // Press back again to exit
         if (pressedTime + 2000 > System.currentTimeMillis()) {
             super.onBackPressed();
-            finish();
+            return
         } else {
-            val snackbar =Snackbar.make(myRecyclerView,"Press back again to exit",Snackbar.LENGTH_SHORT)
+            val snackbar =Snackbar.make(myRecyclerView,
+                "Press back again to exit",Snackbar.LENGTH_SHORT)
             snackbar.apply {
                 setBackgroundTint(Color.rgb(23,28,38))
                 setTextColor(Color.WHITE)
@@ -90,11 +87,16 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
     private fun setUpRecyclerView()
     {
         val db =FirebaseFirestore.getInstance()
-        val query = db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes").orderBy("date")
-        val recyclerViewOptions =FirestoreRecyclerOptions.Builder<NotesModel>().setQuery(query,NotesModel::class.java).build()
+        val query = db.collection("NoteBook").document(firebaseUser.uid).
+        collection("MyNotes").orderBy("date")
+
+        val recyclerViewOptions =FirestoreRecyclerOptions.
+        Builder<NotesModel>().setQuery(query,NotesModel::class.java).build()
+
         myAdapter= MyAdapter(recyclerViewOptions,this)
         myRecyclerView.adapter = myAdapter
-        myRecyclerView.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+        myRecyclerView.layoutManager = StaggeredGridLayoutManager(2,
+            StaggeredGridLayoutManager.VERTICAL)
 
         //deleting notes by swipping
         ItemTouchHelper(itemTouchHelperCallBack).attachToRecyclerView(myRecyclerView)
@@ -113,7 +115,6 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             var note =myAdapter.snapshots.getSnapshot(viewHolder.adapterPosition)
-
             var docReference = note.reference
             deletedNote = note.toObject(NotesModel::class.java)!!
 
@@ -133,6 +134,12 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
+        val positionOfMenuItem = 0 // or whatever...
+
+        val item = menu!!.getItem(positionOfMenuItem)
+        val s = SpannableString("LogOut")
+        s.setSpan(ForegroundColorSpan(Color.BLACK), 0, s.length, 0)
+        item.title = s
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -194,7 +201,8 @@ class NoteHome : AppCompatActivity(), INotesRVAdapter {
     fun deleteNote(note: String)
     {
         val db =FirebaseFirestore.getInstance()
-        val query = db.collection("NoteBook").document(firebaseUser.uid).collection("MyNotes")
+        val query = db.collection("NoteBook").
+        document(firebaseUser.uid).collection("MyNotes")
         query.document(note)
             .delete().addOnSuccessListener {
                 //Toast.makeText(this,"Note Deleted Succesfully",Toast.LENGTH_SHORT).show()
